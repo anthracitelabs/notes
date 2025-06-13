@@ -1,0 +1,6 @@
+ImGui is a bloat-free graphical user interface library for C++. 
+It outputs optimized vertex buffers that you can render anytime in your 3D pipeline enabled application.
+Backends for a variety of graphics API and rendering platforms are provided in /backends folder.
+
+For example to use OpenGL backend
+/backends/imgui_impl_opengl3
