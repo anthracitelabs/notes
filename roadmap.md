@@ -178,6 +178,20 @@ Whenever you see -> in your dependencies report, a requestor (your application o
 
 * You can specify requested versions directly, in a version catalog, or in a Bill of Materials (BOM).
 
+In the module-level build file:
+The compileSdk determines which Android and Java APIs are available when compiling your source code. 
+The minSdk specifies the lowest version of Android that you want your app to support. Setting minSdk restricts which devices can install your app.
+The targetSdk serves two purposes:
+    - It sets runtime behavior of your application.
+    - It attests which version of Android you've tested against.
+
+compileSdk gives you access to new APIs
+targetSdk sets the runtime behavior of your app
+targetSdk must be less than or equal to compileSdk
+
+For example, when API 23 introduced the runtime permissions model, not all apps were ready to immediately adopt it. By setting targetSdk to 22, those apps could run on API 23 devices without using runtime permissions, and could use features included in the latest compileSdk version.
+
+
 
 edit build.gradle file:
         buildscript {
