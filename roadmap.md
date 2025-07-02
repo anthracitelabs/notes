@@ -122,8 +122,62 @@ Folder structure is created like below:
                               AppTest.java
                   resources/
       
-to use the same version of gradle for this project on different machines: 
+to use the same version of gradle for this project on different machines create gradle script by executing the following command: 
   gradle wrapper
+
+Now back to gradle. It is a BUILD SYSTEM. A build system transforms source code into an executable application. Builds often involve tools to analyze, compile, link, package your application or library.
+Gradle uses a TASK based approach to organize and run these commands.
+  - Tasks encapsulate commands that translate their inputs into outputs. 
+  - Plugins define tasks and their configuration.
+Here is the Android developer docs explanation :
+"Applying a plugin to your build registers its tasks, and wires them together using their inputs and outputs. For example, applying the Android Gradle Plugin (AGP) to your build file will register all the tasks necessary to build an APK, or an Android Library. The java-library plugin lets you build a jar from Java source code. Similar plugins exist for Kotlin, and other languages, but other plugins are meant to extend plugins. For example, the protobuf plugin is meant to add protobuf support to existing plugins like AGP or java-library.
+Gradle prefers convention over configuration so plugins will come with good default values out of the box, but you can further configure the build through a declarative Domain-Specific Language (DSL). The DSL is designed so you can specify what to build, rather than how to build it.The logic in the plugins manages the "how". That configuration is specified across several build files in your project (and subprojects).
+Task inputs can be files and directories as well as other information encoded as Java types (integer, strings, or custom classes). Outputs can only be directory or files as they have to be written on disk. Wiring a task output into another task input, links the tasks together so that one has to run before the other."
+
+Gradle uses a Domain-Specific Language (DSL) to configure builds. For example, configuring the Android part of your build in build.gradle.kts file might look like:
+android {
+    namespace = "com.example.app"
+    compileSdk = 34
+    // ...
+
+    defaultConfig {
+        applicationId = "com.example.app"
+        minSdk = 34
+        // ...
+    }
+}
+
+The Maven build system introduced a dependency specification, storage and management system. Libraries are stored in repositories (servers or directories), with metadata including their version and dependencies on other libraries. You specify which repositories to search, versions of the dependencies you want to use, and the build system downloads them during the build.
+Maven Artifacts are identified by group name (company, developer, etc), artifact name (the name of the library) and version of that artifact. This is typically represented as group:artifact:version.
+You can also modularize your project into subprojects (also known as "modules" in Android Studio), which can also be used as dependencies. 
+
+Variants contain different code or are built with different options, and are composed of build types and product flavors.
+Build types vary declared build options. By default, AGP sets up "release" and "debug" build types, but you can adjust them and add more (perhaps for staging or internal testing).
+A debug build marks the application as "debuggable", signing it with a generic debug key and enabling access to the installed application files on the device.
+A release build optimizes the application, signs it with your release key, and protects the installed application files.
+Using product flavors, you can change the included source and dependency variants for the application. For example, you may want to create "demo" and "full" flavors for your application, or perhaps "free" and "paid" flavors. You write your common source in a "main" source set directory, and override or add source in a source set named after the flavor.
+AGP creates variants for each combination of build type and product flavor.  If you don't define flavors, the variants are named after the build types. 
+If you define both, the variant is named <flavor><Buildtype>. For example, with build types release and debug, and flavors demo and full, AGP will create variants:
+    demoRelease
+    demoDebug
+    fullRelease
+    fullDebug
+
+Gradle groups library dependencies into different scopes (called configurations in the Gradle API), allowing you to specify different sets of library dependencies to be used in different parts of your build. 
+For example, AGP defines implementation and api scopes, your way of specifying whether a dependency should be exposed to users of your subproject.
+
+// In a module-level build script
+// explicit dependency strings ("group:artifact:version")
+dependencies {
+    implementation("com.example:library1:1.2.3")
+    api("com.example:library2:1.1.1")
+}
+
+Note that gradle automatically chooses newest version of a library if two different libraries depend on different versions of this library (LibA depends on LibC 2.1.1 and LibB depends on LibC 3.2.2. Gradle chooses LibC 3.2.2 for both libraries). You can use the Gradle dependencies task by running ./gradlew app:dependencies to display a tree of all dependencies used by your app module.
+Whenever you see -> in your dependencies report, a requestor (your application or another library) uses a version of that dependency that it isn't expecting. In many cases, this doesn't cause any issues, as most libraries are written for backward compatibility. However, some libraries may make incompatible changes, and this report can help you determine where new issues with your application's behavior are coming from.
+
+* You can specify requested versions directly, in a version catalog, or in a Bill of Materials (BOM).
+
 
 edit build.gradle file:
         buildscript {
