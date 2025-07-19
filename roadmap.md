@@ -210,3 +210,25 @@ edit build.gradle file:
           buildToolsVersion '26.0.1'
         }
 
+install emulator:
+sdkmanager "emulator"
+
+find a system image using the following command:
+sdkmanager.bat --list
+
+install system image:
+sdkmanager.bat "system-images;android-30;google_apis_playstore;x86_64"
+
+list available devices with their ids:
+avdmanager.bat list device
+
+create device with name test and device id 39 using the system image we installed above:
+avdmanager create avd -n test -k "system-images;android-30;google_apis_playstore;x86_64" -d 39
+
+run the newly created device using emulator tool:
+emulator @test -skin 768x1280
+
+you can install to connected devices via gradle (in that case test device created above): 
+gradlew installDebug
+
+another alternative is the adb command which can be used to install to specific devices..
