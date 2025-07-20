@@ -232,3 +232,20 @@ you can install to connected devices via gradle (in that case test device create
 gradlew installDebug
 
 another alternative is the adb command which can be used to install to specific devices..
+adb install <path/to/your/app.apk>
+
+Lists all Android Virtual Devices (AVDs) available on your development machine. This command is useful for identifying the emulators you can launch to test your application.
+emulator -list-avds
+
+Start a specific Android Virtual Device (AVD).
+emulator -avd avd_name
+
+This command saves the logcat output to logcat.txt in the current directory. The d option dumps the current logcat buffer.
+adb logcat -d > logcat.txt
+
+Use adb qualified names of all apps/packages. If you forget what your qualified app name, but it's installed on the device, then:
+adb shell pm list packages
+And then
+
+adb shell monkey -p your.app.name -v 1
+(to be more precise, this runs the app and sends 1 random input to it)
