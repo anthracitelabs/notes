@@ -63,3 +63,86 @@ You can then create your plugin specs in ~/.config/nvim/lua/plugins/. Each file 
 │       ├── **
 │       └── spec2.lua
 └── init.lua
+
+init.lua
+-------------
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+vim.cmd("set expandtab")
+vim.cmd("set tabstop=2")
+vim.cmd("set softtabstop=2")
+vim.cmd("set shiftwidth=2")
+vim.g.mapleader = " "
+
+vim.api.nvim_set_option("clipboard", "unnamed")
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+vim.opt.rtp:prepend(lazypath)
+
+local plugins = {
+  { dir = "/home/dev/.config/nvim-data/lazy/tokyonight.nvim", name = "tokyonight", priority = 1000 },
+
+  {
+    dir = "/home/dev/.config/nvim-data/lazy/telescope.nvim", tag = '0.1.5', dependencies = { dir = "/home/dev/.config/nvim-data/lazy/plenary.nvim" }
+  },
+
+  { dir = "/home/dev/.config/nvim-data/lazy/nvim-treesitter", build = ":TSUpdate" },
+
+  { dir = "/home/dev/.config/nvim-data/lazy/nvim-tree.lua" },
+
+  { dir = "/home/dev/.config/nvim-data/lazy/telescope-fzf-native.nvim", build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
+
+}
+
+local opts = {}
+
+require("lazy").setup(plugins, opts)
+
+local builtin = require("telescope.builtin")
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+local telescope = require("telescope")
+telescope.setup({
+	pickers = {
+		live_grep = {
+			file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+			additional_args = function(_)
+				return {"--hidden"}
+			end
+		},
+	
+		find_files = {
+			file_ignore_patterns = { '.git', '.venv' },
+			hidden = true
+		}
+	},
+})
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+local api = require("nvim-tree.api")
+vim.keymap.set('n', '<C-g>', api.tree.focus, {})
+vim.keymap.set('n', '<C-h>', api.tree.find_file, {})
+
+-- set color scheme to tokyonight at start
+vim.cmd[[colorscheme tokyonight]]
+
+vim.keymap.set('n', '<space>st', function()
+	vim.cmd.vnew()
+	vim.cmd.term()
+  vim.cmd.wincmd("J")
+	vim.api.nvim_win_set_height(0, 10)
+end)
+
+
+
