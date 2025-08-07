@@ -145,4 +145,6 @@ vim.keymap.set('n', '<space>st', function()
 end)
 
 
-
+Some important key bindings:
+nvim-tree : Change focus <C-W-W>
+neo terminal: Back to Normal mode <C-\><C-N>
