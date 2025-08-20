@@ -29,3 +29,7 @@ Actually, Some articles have discussed this topic, see the following links.
 https://www.apriorit.com/dev-blog/233-how-to-build-apk-file-from-command-line
 https://spin.atomicobject.com/2011/08/22/building-android-application-bundles-apks-by-hand/
 -------------------------------------------------------------------------------------------------------------------
+
+Android Build Toolchain
+
+https://android-developers.googleblog.com/2024/09/become-better-android-developer-compiler-explorer.html
