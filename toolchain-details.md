@@ -15,3 +15,8 @@ Build tool: Tool that calls toolchain tools to transform a collection of source 
 Project generator: Takes an "abstract" description of a project and how the source files relate to the output files and generates something a build tool and/or IDE can use as if the project was built up inside that IDE. This makes cross-platform development a lot less painful if done right. Examples are cmake, qmake, premake, ...
 
 IDE: Text editor enhanced with varying levels of language annotation, code navigation, and toolchain integration. Often you can load project files, search for symbols, build, debug, etc. all from one IDE. Examples are Visual Studio, Qt Creator, KDevelop, Xcode, Eclipse, Code::Blocks, ... and with proper array of plugins: Vim, Emacs, VSCode, Atom, Sublime Text, ...
+
+Android Build Toolchain
+
+https://android-developers.googleblog.com/2024/09/become-better-android-developer-compiler-explorer.html
+
