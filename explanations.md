@@ -21,7 +21,9 @@ use jarsigner to sign MyApplication.apk.unaligned with debug or release key
 use zipalign to align the final APK, e.g output is MyApplication-debug.apk or MyApplication-release.apk if signing with release key
 Done
 
-I have created a sample script to do all the stuffs above, see here
+I have created a sample script to do all the stuffs above, see here:
+https://github.com/WanghongLin/miscellaneous/blob/master/tools/build-apk-manually.sh
+
 Actually, Some articles have discussed this topic, see the following links.
 
 https://www.apriorit.com/dev-blog/233-how-to-build-apk-file-from-command-line
