@@ -10,6 +10,8 @@ uint8_t xlow = x & 0xff;
 uint8_t xhigh = (x >> 8);
 
 -------------------------------------------------------------------------------------------------------------------
+https://stackoverflow.com/questions/41132753/how-can-i-build-an-android-apk-without-gradle-on-the-command-line
+
 Use the following steps to build your apk manually, if you don't want use ant/gralde to build. But you must have Android SDK installed at least.
 
 create R.java from aapt
