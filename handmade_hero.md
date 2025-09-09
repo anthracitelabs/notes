@@ -298,8 +298,42 @@ if (Window)
 
     // ...
 }
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After the analagous blocks we made for XInput, we can lay down the following:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+// NOTE(yakvi): XInputSetState
+#define X_INPUT_SET_STATE(name) DWORD WINAPI name(DWORD dwUserIndex, XINPUT_VIBRATION *pVibration)
+typedef X_INPUT_SET_STATE(x_input_set_state);
+X_INPUT_SET_STATE(XInputSetStateStub) { return (ERROR_DEVICE_NOT_CONNECTED); }
+global_variable x_input_set_state *XInputSetState_ = XInputSetStateStub;
+#define XInputSetState XInputSetState_
+// NOTE(yakvi): DirectSoundCreate
+#define DIRECT_SOUND_CREATE(name) HRESULT WINAPI name(LPCGUID pcGuidDevice, LPDIRECTSOUND *ppDS, LPUNKNOWN pUnkOuter)
+typedef DIRECT_SOUND_CREATE(direct_sound_create);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+DirectSoundCreate returns an HRESULT which must be processed with SUCCEEDED macro which then can return true or false.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+// NOTE(casey): Load the library 
+// ...
+if(DSoundLibrary)
+{
+    // NOTE(casey): Get a DirectSound object 
+    direct_sound_create *DirectSoundCreate = (direct_sound_create*)
+                                    GetProcAddress(DSoundLibrary, "DirectSoundCreate");
+    IDirectSound *DirectSound;
+    if(DirectSoundCreate && SUCCEEDED(DirectSoundCreate(0, &DirectSound, 0)))
+    {
+        // NOTE(casey): Set cooperative level
+        // NOTE(casey): "Create" a primary buffer
+        // NOTE(casey): "Create" a secondary buffer         
+    }
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 Notes on Day 8
 ===================================
