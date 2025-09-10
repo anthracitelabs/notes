@@ -35,3 +35,29 @@ https://spin.atomicobject.com/2011/08/22/building-android-application-bundles-ap
 Android Build Toolchain
 
 https://android-developers.googleblog.com/2024/09/become-better-android-developer-compiler-explorer.html
+
+typedef
+=======================================
+Typedef is used to create aliases to existing types. It's a bit of a misnomer: typedef does not define new types as the new types are interchangeable with the underlying type. Typedefs are often used for clarity and portability in interface definitions when the underlying type is subject to change or is not of importance.
+
+For example:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+// Possibly useful in POSIX:
+typedef int filedescriptor_t;
+
+// Define a struct foo and then give it a typedef...
+struct foo { int i; };
+typedef struct foo foo_t;
+
+// ...or just define everything in one go.
+typedef struct bar { int i; } bar_t;
+
+// Typedef is very, very useful with function pointers:
+typedef int (*CompareFunction)(char const *, char const *);
+CompareFunction c = strcmp;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Typedef can also be used to give names to unnamed types. In such cases, the typedef will be the only name for said type:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+typedef struct { int i; } data_t;
+typedef enum { YES, NO, FILE_NOT_FOUND } return_code_t;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
