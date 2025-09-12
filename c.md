@@ -112,3 +112,56 @@ C storage classes
 		--------------|-------------------------|--------------------------|--------------------------
 		static  	  | Outside all functions 	|   Entire file in which   | Until the program
 		(global)	  |            				|      it is declared      |	terminates								  
+		
+	typedef
+	--------------------------------
+	typedef can be used for casting.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+	typedef int(*ptr_to_int_fun)(void);
+	char *p;
+	...= (ptr_to_int_fun) p;
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	variable length arrays
+	----------------------------------------
+	For C99 and C11 the following declaration is valid
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+	int sum2d(int, int, int array[*][*]); // names can be ommitted
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	and the definition can be like the following
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+	int sum2d(int rows, int cols, int array[rows][cols])
+	{
+		//..
+	}
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	But C11 conforming compiler does not have to implement support for variable length arrays because it is an optional feature.
+	Check for support for variable length arrays
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+	#ifdef __STDC_NO_VLA__
+		printf("Variable length arrays are not supported!\n");
+		exit(1);
+	#endif
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+	flexible member arrays
+	-------------------------------
+	This is a feature introduced in C99 and there are some restrictions on the usage of this.
+	Flexible array has to be the last member of the struct and it also cannot be the only member of the struct
+	Each struct can contain one flexible array at most
+	The struct has to be allocated dynamically, cannot be statically initialized (size cannot be fixed at compile time)
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+	#include <stdio.h>
+	#include <malloc.h>
+	
+	struct s {
+		int arraysize;
+		int array[];
+	};
+	
+	int desiredSize = 10;
+	struct s *ptr;
+	ptr = malloc(sizeof(struct s) + desiredSize * sizeof(int));
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
