@@ -35,18 +35,19 @@ mod2.c
 Memory
 -------------------------------------
 There are three forms of memory you can use in your program. Each type determines where and how it is stored.
-	* static - persists throughout the entire life of the program
-	* stack 
-		* special region of memory that stores temporary variables (variables created inside a function)
-		* LIFO (last in first out) linear data structure
-		* variables allocated/freed automatically
-		* divided into stack frames for each function call, when a function exits all its variables are popped off
-	* heap  
-		* hierarchical data structure
-		* large pool of memory that can be used dynamically
-		* memory is not automatically managed 
-		* accessed through pointers (malloc/free)
-		* no restrictions on the size of the heap - only limit is physical memory
+	
+	- static - persists throughout the entire life of the program
+	- stack 
+		- special region of memory that stores temporary variables (variables created inside a function)
+		- LIFO (last in first out) linear data structure
+		- variables allocated/freed automatically
+		- divided into stack frames for each function call, when a function exits all its variables are popped off
+	- heap  
+		- hierarchical data structure
+		- large pool of memory that can be used dynamically
+		- memory is not automatically managed 
+		- accessed through pointers (malloc/free)
+		- no restrictions on the size of the heap - only limit is physical memory
 
 storage classes
 -------------------------------------
@@ -78,18 +79,20 @@ C storage classes
 		- static variables preserve their last value and no new memory is allocated as they are not re-declared
 		- making local variables static allows them to maintain their values between function calls
 		- Note that these two local static variables are different
-			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
-			int foo1()
-			{
-				static int count = 100; // initial value at program execution start, then it can change during execution
-			}
-			
-			int foo2()
-			{
-				static int count2; 
-				count2 = 100;	// variable will be initialized each time this function is called 
-			}
-			~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+int foo1()
+{
+	static int count = 100; // initial value at program execution start, then it can change during execution
+}
+
+int foo2()
+{
+	static int count2; 
+	count2 = 100;	// variable will be initialized each time this function is called 
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		
 		- static variables should not be declared inside a structure because memory allocation for structure members should be contiguous. Whatever might be the case all structure members should reside in the same memory segment. The value of the structure element is fetched by counting the offset of the element from the beginning address of the structure.
 		
 		(#) Summary of storage classes
@@ -113,55 +116,55 @@ C storage classes
 		static  	  | Outside all functions 	|   Entire file in which   | Until the program
 		(global)	  |            				|      it is declared      |	terminates								  
 		
-	typedef
-	--------------------------------
-	typedef can be used for casting.
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
-	typedef int(*ptr_to_int_fun)(void);
-	char *p;
-	...= (ptr_to_int_fun) p;
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
-	variable length arrays
-	----------------------------------------
-	For C99 and C11 the following declaration is valid
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
-	int sum2d(int, int, int array[*][*]); // names can be ommitted
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
-	and the definition can be like the following
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
-	int sum2d(int rows, int cols, int array[rows][cols])
-	{
-		//..
-	}
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
-	But C11 conforming compiler does not have to implement support for variable length arrays because it is an optional feature.
-	Check for support for variable length arrays
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
-	#ifdef __STDC_NO_VLA__
-		printf("Variable length arrays are not supported!\n");
-		exit(1);
-	#endif
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
-	flexible member arrays
-	-------------------------------
-	This is a feature introduced in C99 and there are some restrictions on the usage of this.
-	Flexible array has to be the last member of the struct and it also cannot be the only member of the struct
-	Each struct can contain one flexible array at most
-	The struct has to be allocated dynamically, cannot be statically initialized (size cannot be fixed at compile time)
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
-	#include <stdio.h>
-	#include <malloc.h>
-	
-	struct s {
-		int arraysize;
-		int array[];
-	};
-	
-	int desiredSize = 10;
-	struct s *ptr;
-	ptr = malloc(sizeof(struct s) + desiredSize * sizeof(int));
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+typedef
+--------------------------------
+typedef can be used for casting.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+typedef int(*ptr_to_int_fun)(void);
+char *p;
+...= (ptr_to_int_fun) p;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+variable length arrays
+----------------------------------------
+For C99 and C11 the following declaration is valid
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+int sum2d(int, int, int array[*][*]); // names can be ommitted
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+and the definition can be like the following
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+int sum2d(int rows, int cols, int array[rows][cols])
+{
+	//..
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+But C11 conforming compiler does not have to implement support for variable length arrays because it is an optional feature.
+Check for support for variable length arrays
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+#ifdef __STDC_NO_VLA__
+	printf("Variable length arrays are not supported!\n");
+	exit(1);
+#endif
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+flexible member arrays
+-------------------------------
+This is a feature introduced in C99 and there are some restrictions on the usage of this.
+Flexible array has to be the last member of the struct and it also cannot be the only member of the struct
+Each struct can contain one flexible array at most
+The struct has to be allocated dynamically, cannot be statically initialized (size cannot be fixed at compile time)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ C
+#include <stdio.h>
+#include <malloc.h>
+
+struct s {
+	int arraysize;
+	int array[];
+};
+
+int desiredSize = 10;
+struct s *ptr;
+ptr = malloc(sizeof(struct s) + desiredSize * sizeof(int));
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
