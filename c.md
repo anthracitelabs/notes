@@ -52,6 +52,7 @@ There are three forms of memory you can use in your program. Each type determine
 storage classes
 -------------------------------------
 C storage classes 
+
 	- auto - is used to declare variables of automatic storage duration
 		- created when the block in which they are defined is entered
 		- exists while the block is active
