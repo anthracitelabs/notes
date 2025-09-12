@@ -52,13 +52,13 @@ There are three forms of memory you can use in your program. Each type determine
 storage classes
 -------------------------------------
 C storage classes 
-	* auto - is used to declare variables of automatic storage duration
+	- auto - is used to declare variables of automatic storage duration
 		- created when the block in which they are defined is entered
 		- exists while the block is active
 		- destroyed when the block is exited
 		- local variables have automatic storage duration by default
 		- also note that auto is completely different meaning in C++, must be used with caution for the sake of C/C++ compatibity
-	* register
+	- register
 		- this storage class is used to define local variables that should be stored in a register instead of RAM
 		- can be used for heavily used variables which need quick access
 		- but it is the compiler's choice to put the variable in a register or not so depends on hardware and implementation restrictions
@@ -67,12 +67,12 @@ C storage classes
 		- you cannot obtain the address of a register variable using pointers and cannot apply the & operator to it. It does not have a memory location
 		- life-time is limited to the block it is defined in, same as auto
 		- can only be used in local block, cannot be used globally
-	* extern - tells us that a variable is defined elsewhere, not within the same block where it is used
+	- extern - tells us that a variable is defined elsewhere, not within the same block where it is used
 		- The first way to use extern variable is declare a global variable inside a module - not preceded by the word extern, then use the variable in other modules by declaring it with keyword extern
 		- second way is declaring the variable outside any function with the extern keyword and assigning an initial value to it
 		- functions can be declared extern and this way function can be used inside a module without an include file
 		- function declarations are extern by default the other alternative is static 
-	* static
+	- static
 		- when applied to local variables it instructs the compiler to keep the variable in existence during the life-time of the program
 		- when applied to global variables static modifier causes that variable's scope to be restricted to the file in which it is declared
 		- when applied to functions, static function can only be called from within the same file as the function appears
