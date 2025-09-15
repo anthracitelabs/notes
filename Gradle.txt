@@ -1,0 +1,54 @@
+Gradle is a build automation tool.
+
+To generate a java application under a directory named tutorial, gradle init is executed as in the following: 
+	gradle init --type java-application --dsl kotlin
+
+This creates a root project 'tutorial' with the subproject 'app'. There can be multiple subprojects under the root project each with its own build.gradle(.kts) file.
+
+The recommended way to execute any Gradle build is with the help of the Gradle wrapper. The wrapper is a script (called gradlew or gradlew.bat) that invokes a declared version of Gradle, downloading it beforehand if necessary. Instead of running 
+	gradle build 
+using the installed Gradle, you use the Gradle wrapper by calling 
+	./gradlew build.
+
+Gradle script allows you to run Gradle build without requiring Gradle being installed on your system.
+
+Executing Gradle on the command line conforms to the following structure:
+	gradle [taskName1 taskName2...] [--option-name...]
+
+Some examples for specifying option flags:
+	gradle [...] --build-cache
+	gradle [...] --no-build-cache
+	gradle --help
+	gradle -h
+	gradle [...] --console=plain
+
+Many command line flags can be specified in gradle.properties to avoid needing to be typed.
+
+Gradle is a framework for building applications. 
+Gradle builds artifacts class files, XML, data/graphics into deployment artifacts war/jar/apk while managing dependencies during this process.
+
+Other build systems Maven Ivy and Ant use xml to describe a build while Gradle does this in a different language called Groovy (a variant of Java). Using a programming language rather than a declarative XML technique makes it easier to make modifications to the build and make them more complicated.
+
+Key features of Gradle:
+1- Build file
+	Human and machine readeble instruction file
+	Declarative and programmatic
+	Uses DSL and Groovy (also Kotlin)
+	Default name - build.gradle
+2- Construct a Graph of Tasks
+	Tasks are detailed build steps parsed from build.gradle
+	Gradle creates a directed acyclic graph (does not repeat itself, does not go back in a cycle)
+3- Executes the tasks
+	Gradle executes the tasks in order
+	Each task produces output used by the next task
+	Saves the output of each task
+4- Manages dependencies
+	external Java code libraries
+	may have additional internal dependencies
+	need to be the correct version
+5- Uses repositories
+6- Self updating
+	auto retrieval of new versions of Gradle
+	can also monitor new version of dependencies
+
+
