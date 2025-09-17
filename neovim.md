@@ -80,6 +80,8 @@ vim.cmd("set shiftwidth=2")
 
 -- to remap terminal exit combination to a simple Esc key 
 vim.cmd("tnoremap <Esc> <C-\\><C-n>")
+-- to always be in insert mode by default when entering a terminal split
+vim.cmd("autocmd TermOpen * execute 'startinsert'")
 
 vim.g.mapleader = " "
 
